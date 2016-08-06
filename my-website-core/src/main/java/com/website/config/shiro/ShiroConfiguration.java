@@ -60,7 +60,7 @@ public class ShiroConfiguration {
         filterChains.put("/public/**", Filter.ANON);
         filterChains.put("/js/**", Filter.ANON);
         filterChains.put("/css/**", Filter.ANON);
-        filterChains.put("/druid/**", Filter.USER);
+        filterChains.put("/druid/**", Filter.ANON);
         ShiroConfiguration.LOGGER.debug("Creating filter chain {}", filterChains);
         factoryBean.setFilterChainDefinitionMap(filterChains);
         return factoryBean;
@@ -91,7 +91,7 @@ public class ShiroConfiguration {
             // Session expire time in mill unit
             sessionManager.setGlobalSessionTimeout(20 * 1000);
             // Redis Recommend
-            sessionManager.setSessionDAO(sessionDAO());
+            //sessionManager.setSessionDAO(sessionDAO());
             // Listeners for create, stop or expiration
             if (sessionListeners != null && !sessionListeners.isEmpty()) {
                 sessionManager.setSessionListeners(sessionListeners);

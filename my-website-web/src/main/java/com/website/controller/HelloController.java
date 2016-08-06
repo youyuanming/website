@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.website.biz.UserBiz;
+import com.website.entity.po.UserInfo;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 public class HelloController {
-	private static final Logger LOG = LoggerFactory.getLogger(HelloController.class);
 	
 	@Autowired
 	private UserBiz userBiz;
@@ -34,9 +37,11 @@ public class HelloController {
 
     @RequestMapping("/hello")
     public Object hello() {
+    	log.info("测试hello");
     	Subject subject = SecurityUtils.getSubject();
     	if(subject.isAuthenticated()){
-    		return userBiz.findUserInfo(999586L);
+    		UserInfo user = userBiz.findUserInfo(1L);
+    		return user;
     	}else{
     		return "no login";
     	}
