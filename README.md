@@ -8,7 +8,7 @@ spring boot+shiro+redis+jpa
 ###
 初始化sql脚本
 ###
-```
+```sql
 CREATE TABLE db.user_info (
   id INT NOT NULL AUTO_INCREMENT,
   user_name VARCHAR(45) NOT NULL COMMENT '用户名',
@@ -21,4 +21,6 @@ DEFAULT CHARACTER SET = utf8;
 ```
 
 ###
+```
 INSERT INTO `db`.`user_info` (`user_name`, `password`) VALUES ('admin', 'admin');
+```
