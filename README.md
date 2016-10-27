@@ -1,8 +1,12 @@
 # website
 -----------------------------------
-spring boot+shiro+redis+jpa
-###
-使用spring boot 框架 权限控制使用的是shrio并使用redis控制session 数据持久化工具用的是JPA ，日后还会添加web前后分离框架，前端通过json生成页面
+## 项目简介
+1. 项目使用是基于spring boot进行快速构建
+2. 权限管理集成了框架shiro,项目中已经配置好登录验证和权限验证的功能,自定义权限请看代码
+3. 项目中session可使用redis替带管理,项目中已经配置好,只要放开代码redis注释即可
+4. 项目中使用的mybatis
+5. 前端框架页面使用了adminATL,具体使用文档可看官网说明
+6. 项目功能和使用说明会持续更新
 
 
 ###
