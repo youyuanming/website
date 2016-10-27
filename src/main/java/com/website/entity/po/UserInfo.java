@@ -1,34 +1,53 @@
-/**
- * 
- */
 package com.website.entity.po;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class UserInfo {
+    private Integer id;
 
-import lombok.Getter;
-import lombok.Setter;
+    private String userName;
 
-/**
- * @author youyuanming
- *
- */
-//@Entity
-//@Table(name = "user_info")
-@Getter
-@Setter
-public class UserInfo{
+    private String password;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	@Column(nullable = false, name="user_name")
-	private String userName;
-	@Column(name="real_name")
-	private String realName;
-	
+    private String isDelete;
+
+    private String mobilePhone;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete == null ? null : isDelete.trim();
+    }
+
+    public String getMobilePhone() {
+        return mobilePhone;
+    }
+
+    public void setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone == null ? null : mobilePhone.trim();
+    }
 }

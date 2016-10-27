@@ -17,71 +17,12 @@
     from user_info
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from user_info
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
   <insert id="insert" parameterType="com.website.entity.po.UserInfo" >
     insert into user_info (id, user_name, `password`, 
       is_delete, mobile_phone)
     values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{isDelete,jdbcType=CHAR}, #{mobilePhone,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.website.entity.po.UserInfo" >
-    insert into user_info
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="userName != null" >
-        user_name,
-      </if>
-      <if test="password != null" >
-        `password`,
-      </if>
-      <if test="isDelete != null" >
-        is_delete,
-      </if>
-      <if test="mobilePhone != null" >
-        mobile_phone,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="isDelete != null" >
-        #{isDelete,jdbcType=CHAR},
-      </if>
-      <if test="mobilePhone != null" >
-        #{mobilePhone,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.website.entity.po.UserInfo" >
-    update user_info
-    <set >
-      <if test="userName != null" >
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        `password` = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="isDelete != null" >
-        is_delete = #{isDelete,jdbcType=CHAR},
-      </if>
-      <if test="mobilePhone != null" >
-        mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
   <update id="updateByPrimaryKey" parameterType="com.website.entity.po.UserInfo" >
     update user_info
     set user_name = #{userName,jdbcType=VARCHAR},
@@ -90,4 +31,10 @@
       mobile_phone = #{mobilePhone,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="findUserByUsername" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from user_info
+    where user_name = #{userName,jdbcType=VARCHAR} and is_delete=0
+  </select>
 </mapper>

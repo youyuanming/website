@@ -21,3 +21,6 @@ logs
 target
 *.iml
 .classpath
+.class
+.log
+

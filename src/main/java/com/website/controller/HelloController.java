@@ -9,12 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Slf4j
 @Controller
 public class HelloController {
-	
 
 	/**
 	 * 登录系统首页
@@ -39,7 +37,7 @@ public class HelloController {
 	 * @param model
 	 * @return
 	 */
-    @RequestMapping(value = "/login", method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/login")
     public String login(String username,String password,Model model) {
 		try {
 			if(StringUtils.isEmpty(username)||StringUtils.isEmpty(password)){
@@ -51,7 +49,7 @@ public class HelloController {
 			subject.login(upt);
 			subject.hasRole(upt.getUsername());
 		} catch (AuthenticationException e) {
-			e.printStackTrace();
+			log.info("登录失败,用户名或密码错误",e.getMessage());
 			model.addAttribute("errorText","您的账号或密码输入错误!");
 			//rediect.addFlashAttribute("errorText", "您的账号或密码输入错误!");
 			return "login";
@@ -69,7 +67,7 @@ public class HelloController {
     	try {
 			subject.logout();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.info("退出系统异常",e.getMessage());
 		}
         return "redirect:/login";
     }

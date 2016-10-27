@@ -1,5 +1,7 @@
 package com.website.config.shiro;
 
+import com.website.entity.po.UserInfo;
+import com.website.service.UserInfoService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -8,6 +10,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.website.entity.bo.User;
@@ -17,6 +20,10 @@ import com.website.entity.bo.User;
  */
 @Component
 public class UserRealm extends AuthorizingRealm {
+
+    @Autowired
+    private UserInfoService userInfoService;
+
 	/**
      * 此方法调用  hasRole,hasPermission的时候才会进行回调.
      *
@@ -90,10 +97,16 @@ public class UserRealm extends AuthorizingRealm {
         //final char[] password = (char[]) token.getCredentials();
         String p = ((char[]) token.getCredentials()).toString();
         //这里改成查询数据库
+        UserInfo userInfo = userInfoService.findUserByUsername(username);
+        if(userInfo==null){
+            return null;
+        }
+        //存储在session的对象
         User user=new User();
-        user.setU(username);
-        user.setP("123");
-        String password = "123";
+        user.setUserName(userInfo.getUserName());
+        user.setMobilePhone(userInfo.getMobilePhone());
+        //校验用的密码
+        String password = userInfo.getPassword();
         //放入user对象
         return new SimpleAuthenticationInfo(user, password, getName());
     }

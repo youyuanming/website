@@ -11,6 +11,6 @@ public class User implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private String u;
-	private String p;
+	private String userName;
+	private String mobilePhone;
 }
