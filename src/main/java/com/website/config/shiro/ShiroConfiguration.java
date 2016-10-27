@@ -58,8 +58,6 @@ public class ShiroConfiguration {
         final LinkedHashMap<String, String> filterChains = new LinkedHashMap<>();
         filterChains.put("/static/**", Filter.ANON);
         filterChains.put("/public/**", Filter.ANON);
-        filterChains.put("/js/**", Filter.ANON);
-        filterChains.put("/css/**", Filter.ANON);
         filterChains.put("/druid/**", Filter.ANON);
         ShiroConfiguration.LOGGER.debug("Creating filter chain {}", filterChains);
         factoryBean.setFilterChainDefinitionMap(filterChains);
@@ -88,8 +86,8 @@ public class ShiroConfiguration {
         public DefaultWebSessionManager sessionManager(@Qualifier("sessionCookie") SimpleCookie sessionCookie) {
             LOGGER.debug("Creating session manager");
             final DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-            // Session expire time in mill unit
-            sessionManager.setGlobalSessionTimeout(20 * 1000);
+            // Session expire time in mill unit 超时时间30分钟
+            sessionManager.setGlobalSessionTimeout(30 * 60 * 1000);
             // Redis Recommend
             //sessionManager.setSessionDAO(sessionDAO());
             // Listeners for create, stop or expiration

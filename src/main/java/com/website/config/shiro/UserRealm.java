@@ -88,6 +88,8 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String) token.getPrincipal();
         //final char[] password = (char[]) token.getCredentials();
+        String p = ((char[]) token.getCredentials()).toString();
+        //这里改成查询数据库
         User user=new User();
         user.setU(username);
         user.setP("123");

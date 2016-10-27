@@ -17,8 +17,8 @@ import lombok.Setter;
  * @author youyuanming
  *
  */
-@Entity
-@Table(name = "user_info")
+//@Entity
+//@Table(name = "user_info")
 @Getter
 @Setter
 public class UserInfo{

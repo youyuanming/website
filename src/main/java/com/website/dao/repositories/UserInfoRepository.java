@@ -5,7 +5,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.website.entity.po.UserInfo;
 
-public interface UserInfoRepository extends CrudRepository<UserInfo, Long> {
+public interface UserInfoRepository  {
+	/*extends CrudRepository<UserInfo, Long>*/
 
 	/**
 	 * 通过id查询user_info表

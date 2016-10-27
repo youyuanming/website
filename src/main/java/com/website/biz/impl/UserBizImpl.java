@@ -11,12 +11,13 @@ import com.website.entity.po.UserInfo;
 @Service
 public class UserBizImpl implements UserBiz {
 
-	@Autowired
-	private UserInfoRepository userInfoRepository;//user_info
+	//@Autowired
+	//private UserInfoRepository userInfoRepository;//user_info
 	
 	@Override
 	public UserInfo findUserInfo(long id) {
-		return userInfoRepository.findUserInfoById(id);
+		return null;
+		//return userInfoRepository.findUserInfoById(id);
 	}
 
 }

@@ -1,66 +1,69 @@
 package com.website.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.website.biz.UserBiz;
-import com.website.entity.po.UserInfo;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RestController
+@Controller
 public class HelloController {
 	
-	@Autowired
-	private UserBiz userBiz;
-	
-	@RequestMapping("/home/{username}")
-    public String home(@PathVariable("username") String username) {
-    	System.out.println("my name is "+username);
-        return "home";
-    }
-	
-    @RequestMapping("/")
-    public String index( ) {
-        return "index";
-    }
 
-    @RequestMapping("/hello")
-    public Object hello() {
-    	log.info("测试hello");
+	/**
+	 * 登录系统首页
+	 * @return
+	 */
+    @RequestMapping("/index")
+    public String index() {
+    	//获得用户信息
     	Subject subject = SecurityUtils.getSubject();
-    	if(subject.isAuthenticated()){
-    		UserInfo user = userBiz.findUserInfo(1L);
-    		return user;
+		//判断是否登录
+		if(subject.isAuthenticated()){
+    		return "index";
     	}else{
-    		return "no login";
+    		return "login";
     	}
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(String username,String password) {
-		UsernamePasswordToken upt = new UsernamePasswordToken(username, password);
-		Subject subject = SecurityUtils.getSubject();
+	/**
+	 * 登录系统
+	 * @param username
+	 * @param password
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping(value = "/login", method = {RequestMethod.GET,RequestMethod.POST})
+    public String login(String username,String password,Model model) {
 		try {
+			if(StringUtils.isEmpty(username)||StringUtils.isEmpty(password)){
+				//model.addAttribute("errorText","请输入用户名和密码!");
+				return "login";
+			}
+			UsernamePasswordToken upt = new UsernamePasswordToken(username, password);
+			Subject subject = SecurityUtils.getSubject();
 			subject.login(upt);
+			subject.hasRole(upt.getUsername());
 		} catch (AuthenticationException e) {
 			e.printStackTrace();
+			model.addAttribute("errorText","您的账号或密码输入错误!");
 			//rediect.addFlashAttribute("errorText", "您的账号或密码输入错误!");
+			return "login";
 		}
-		return "login success";
+		return "redirect:/index";
     }
 
-    @RequestMapping("/layout")
+	/**
+	 * 退出系统
+	 * @return
+	 */
+	@RequestMapping("/layout")
     public String layout() {
     	Subject subject = SecurityUtils.getSubject();
     	try {
@@ -68,6 +71,6 @@ public class HelloController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        return "layout";
+        return "redirect:/login";
     }
 }
