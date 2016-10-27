@@ -21,6 +21,6 @@ DEFAULT CHARACTER SET = utf8;
 ```
 
 ###
-```
-INSERT INTO `db`.`user_info` (`user_name`, `password`) VALUES ('admin', 'admin');
+```sql
+INSERT INTO db.user_info (user_name, password) VALUES ('admin', 'admin');
 ```
