@@ -27,6 +27,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="plugins/pace/pace.min.css">
   <!-- Morris chart -->
   <link rel="stylesheet" href="plugins/morris/morris.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="plugins/datatables/jquery.dataTables.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -387,67 +389,25 @@ desired effect
 	    <div class="box-body">	
 			<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
         		<thead>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        	</thead>
-        <tfoot>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </tfoot>
-        <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011/07/25</td>
-                <td>$170,750</td>
-            </tr>
-            <tr>
-                <td>Ashton Cox</td>
-                <td>Junior Technical Author</td>
-                <td>San Francisco</td>
-                <td>66</td>
-                <td>2009/01/12</td>
-                <td>$86,000</td>
-            </tr>
-            <tr>
-                <td>Cedric Kelly</td>
-                <td>Senior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2012/03/29</td>
-                <td>$433,060</td>
-            </tr>
-            <tr>
-                <td>Airi Satou</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>33</td>
-                <td>2008/11/28</td>
-                <td>$162,700</td>
-            </tr>
-       	 	</tbody>
+                    <tr>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr>
+                </tfoot>
     		</table>
 	    </div><!-- /.box-body -->
 	  </div><!-- /.box -->
@@ -593,6 +553,8 @@ desired effect
 <script src="plugins/morris/morris.min.js"></script>
 <!-- jQuery Knob -->
 <script src="plugins/knob/jquery.knob.js"></script>
+<!-- DataTables -->
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 	// To make Pace works on Ajax calls
 	$(document).ajaxStart(function() { Pace.restart(); });
@@ -678,6 +640,50 @@ desired effect
 	  $(function () {
 	  	$(".knob").knob();
 	  });
+    var table;
+    $(document).ready(function() {
+        table = $('#example').DataTable( {
+            "renderer": "bootstrap",//渲染样式,默认
+            "processing": true,
+            "serverSide": true,//从服务器获取数据
+            "lengthChange": false,//每页显示条数选择框
+            "ordering": false,//排序
+            "searching": false,//文本搜索
+            "pageLength": 10,
+            "ajax": {
+                "url": "/test",
+                "type": "POST",
+                "dataSrc": function (json) {
+                    for ( var i=0,ien=json.data.length ; i<ien ; i++ ) {
+                        json.data[i][1] = '<a href="/message/'+json.data[i][1]+'">View message</a>';
+                    }
+                    return json.data;
+                }
+            },
+            /*"columns": [
+                { "data": "name" },
+                { "data": "position" },
+                { "data": "office" },
+                { "data": "extn" },
+                { "data": "start_date" },
+                { "data": "salary" }
+            ],*/
+           // rowId: [{ "data": "staffId" }],
+            //DT_RowId: [{ "data": "staffId" }],
+            "pagingType": "full_numbers",//分页框控件类型
+            "language": {
+                "paginate": {
+                    "next": "下一页",
+                    "previous": "上一页"
+                }
+            }
+        } );
+
+        $('#example').on( 'click', 'tr', function () {
+            var id = table.row(this).data();
+            alert( 'Clicked row id '+id.toString() );
+        } );
+    } );
 		  
 </script>			
 
