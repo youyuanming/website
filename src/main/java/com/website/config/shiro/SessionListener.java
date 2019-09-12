@@ -1,3 +1,4 @@
+/*
 package com.website.config.shiro;
 
 import org.apache.shiro.session.Session;
@@ -6,9 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+*/
 /**
  * @author Solar
- */
+ *//*
+
 @Component
 public class SessionListener extends SessionListenerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(SessionListener.class);
@@ -28,3 +31,4 @@ public class SessionListener extends SessionListenerAdapter {
         LOGGER.debug(" <<=== Session: [{}] From: [{}] STOP ", session.getId(), session.getHost());
     }
 }
+*/

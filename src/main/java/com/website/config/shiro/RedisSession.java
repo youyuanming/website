@@ -1,3 +1,4 @@
+/*
 package com.website.config.shiro;
 
 import org.apache.shiro.session.Session;
@@ -13,31 +14,35 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
+*/
 /**
  * 提供给solar session使用的redis持久化操作
  * @author Solar
- */
-public class RedisSessionDAO extends AbstractSessionDAO {
+ *//*
+
+public class RedisSession extends AbstractSessionDAO {
 	
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedisSessionDAO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisSession.class);
     
     private static final String ACTIVE_SESSION = "atv:session:";
     private RedisTemplate<Serializable, Session> redisTemplate;
     private ValueOperations<Serializable, Session> sessionOperations;
 
-    public RedisSessionDAO(RedisTemplate<Serializable, Session> redisTemplate) {
+    public RedisSession(RedisTemplate<Serializable, Session> redisTemplate) {
         this.redisTemplate = redisTemplate;
         sessionOperations = redisTemplate.opsForValue();
     }
 
     @Override
     protected Serializable doCreate(Session session) {
-    	/*
+    	*/
+/*
     	 * redis创建session
-    	 */
+    	 *//*
+
         final Serializable sessionId = generateSessionId(session);
         assignSessionId(session, sessionId);
-        sessionOperations.set(sessionId, session, 30, TimeUnit.SECONDS);
+        sessionOperations.set(sessionId, session, 4320, TimeUnit.SECONDS);
         return sessionId;
     }
 
@@ -50,7 +55,7 @@ public class RedisSessionDAO extends AbstractSessionDAO {
     @Override
     public void update(Session session) throws UnknownSessionException {
     	//session会话更新
-        sessionOperations.set(session.getId(), session, 30, TimeUnit.SECONDS);
+        sessionOperations.set(session.getId(), session, 4320, TimeUnit.SECONDS);
     }
 
     @Override
@@ -64,3 +69,4 @@ public class RedisSessionDAO extends AbstractSessionDAO {
         return Collections.emptySet();
     }
 }
+*/

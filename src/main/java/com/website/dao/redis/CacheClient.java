@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RedisDAO {
+public class CacheClient {
 
 	@Autowired	
 	private RedisTemplate redisTemplate;
@@ -39,7 +39,7 @@ public class RedisDAO {
 	 * @param value
 	 * @param timeout 分钟
 	 */
-	public void set(String key,String value,int timeout) {
+	public void set(String key,String value,long timeout) {
 		ValueOperations<String,String> operations = redisTemplate.opsForValue();
 		operations.set(key, value, timeout, TimeUnit.SECONDS);
     }
@@ -50,11 +50,22 @@ public class RedisDAO {
 	 * @param value
 	 * @param timeout 分钟
 	 */
-	public void set(String key,Object value,int timeout) {
+	public void set(String key,Object value,long timeout) {
 		ValueOperations<String,Object> operations = redisTemplate.opsForValue();
 		operations.set(key, value, timeout, TimeUnit.SECONDS);
-    }
-	
+	}
+
+	/**
+	 * 设置key超时时间
+	 * @param key
+	 * @param timeout 分钟
+	 */
+	public void expire(String key,long timeout) {
+		redisTemplate.expire(key,timeout,TimeUnit.SECONDS);
+	}
+
+
+
 	/**
 	 * 查询类型为string的key
 	 * @param key

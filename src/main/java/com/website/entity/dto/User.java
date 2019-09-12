@@ -1,9 +1,12 @@
-package com.website.entity.bo;
+package com.website.entity.dto;
 
 import java.io.Serializable;
 
 import lombok.Data;
 
+/**
+ * 用户对象
+ */
 @Data
 public class User implements Serializable{
 	/**

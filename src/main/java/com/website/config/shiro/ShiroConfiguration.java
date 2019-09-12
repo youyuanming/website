@@ -1,3 +1,4 @@
+/*
 package com.website.config.shiro;
 
 import java.util.Collection;
@@ -22,8 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.apache.shiro.mgt.SecurityManager;
+import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
 public class ShiroConfiguration {
@@ -34,9 +35,11 @@ public class ShiroConfiguration {
     public DefaultWebSecurityManager securityManager(SessionManager sessionManager,
                                                      RememberMeManager rememberMeManager,
                                                      Collection<Realm> realms) {
-    	/**
+    	*/
+/**
     	 * 注入组件
-    	 */
+    	 *//*
+
     	LOGGER.debug("Setting security manager");
         final DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setSessionManager(sessionManager);
@@ -48,9 +51,11 @@ public class ShiroConfiguration {
 
     @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
-    	/**
+    	*/
+/**
     	 * url访问权限设置,其他可通过注解控制
-    	 */
+    	 *//*
+
         ShiroConfiguration.LOGGER.debug("Setting Shiro Filter");
         final ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(securityManager);
@@ -68,9 +73,11 @@ public class ShiroConfiguration {
     protected static class ShiroSessionConfiguration {
         @Autowired(required = false)
         Collection<SessionListener> sessionListeners;
-        /**
+        */
+/**
          * Could not inject {@code RedisTemplate<Serializable, Session>}
-         */
+         *//*
+
         @SuppressWarnings("rawtypes")
 		@Autowired
         private RedisTemplate redisTemplate;
@@ -79,7 +86,7 @@ public class ShiroConfiguration {
 		@Bean
         public SessionDAO sessionDAO() {
             LOGGER.debug("Setting session DAO");
-            return new RedisSessionDAO(redisTemplate);
+            return new RedisSession(redisTemplate);
         }
 
         @Bean
@@ -164,3 +171,4 @@ public class ShiroConfiguration {
     }
 	
 }
+*/
